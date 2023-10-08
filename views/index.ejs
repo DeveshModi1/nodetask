@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>User Data</title>
+    <style>
+      .container {
+        display: grid;
+
+        grid-template-columns: repeat(4, 1fr);
+
+        grid-auto-rows: auto;
+
+        grid-gap: 1rem;
+      }
+      .card {
+        border: 1px solid #ccc;
+        width: 300px;
+        padding: 10px;
+        margin: 10px;
+
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
+
+      .user-details {
+        font-weight: bold;
+      }
+      .popup {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>User Data</h1>
+    
+
+    <div class="container">
+      <div class="card" id="card">
+        <p class="user-details" id="user-sock">Socket Id:</p>
+        <p class="user-details">Click Me For Info</p>
+      </div>
+    </div>
+    <div class="popup" id="popup">
+      <div class="container">
+        <% let foundUser = false; %>
+        <% users.forEach(user => { %> 
+          <% if (user.email === userEmail) { %>
+            <!-- Display user details when email matches -->
+            <div class="card" id="card">
+              <p class="user-details">Name: <%= user.fname %> <%= user.lname %></p>
+              <p class="user-details">Mob No: <%= user.mobile %></p>
+              <p class="user-details">EmailId: <%= user.email %></p>
+              <p class="user-details">Address: <%= user.Address %></p>
+              <p class="user-details">LoginId: <%= user.loginId %></p>
+              <p class="user-details">Password: <%= user.password %></p>
+              <p class="user-details">CreatedAt: <%= user.createdAt %></p>
+            </div>
+            <% foundUser = true; %>
+          <% } %>
+        <% }); %>
+      
+        <% if (!foundUser) { %>
+          <!-- Display a message when no matching user is found -->
+          <div class="card" id="card">
+            <p class="user-details">User Email Not Found</p>
+          </div>
+          <!-- Refresh the page after a delay (e.g., 3 seconds) -->
+          <script>
+            setTimeout(function() {
+              window.location.reload();
+            }, 1000); // Refresh after 3 seconds (adjust the delay as needed)
+          </script>
+        <% } %>
+      </div>
+     
+      <!-- <div class="container">
+        <% users.forEach(user => { %> 
+          <% if (user.email === userEmail) { %>
+          
+        <div class="card" id="card">
+          <p class="user-details">Name: <%= user.fname %> <%= user.lname %></p>
+          <p class="user-details">Mob No: <%= user.mobile %></p>
+          <p class="user-details">EmailId: <%= user.email %></p>
+          <p class="user-details">Address: <%= user.Address %></p>
+          <p class="user-details">LoginId: <%= user.loginId %></p>
+          <p class="user-details">Password: <%= user.password %></p>
+          <p class="user-details">CreatedAt: <%= user.createdAt %></p>
+          
+        </div>
+        <% } %>
+        <% }); %>
+      </div> -->
+      <button id="close">Close</button>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const socket = io();
+
+      socket.on("connectedRoom", (data) => {
+        const sock = document.getElementById("user-sock");
+
+        sock.innerHTML = "";
+        data.forEach((user) => {
+          const userElements = document.createElement("div");
+          userElements.textContent = `Socket Id: ${user.sock} \n Email: ${user.email}`;
+          sock.appendChild(userElements);
+          const cardDiv = document.getElementById("card");
+          const cls = document.getElementById("close");
+          
+
+          cardDiv.addEventListener("click", async () => {
+            console.log("Card clicked!");
+            const popup = document.getElementById("popup");
+
+            popup.style.display = "block";
+            
+            
+          });
+          cls.addEventListener("click", async () => {
+            const popup = document.getElementById("popup");
+        popup.style.display = "none";
+            
+            
+          });
+          
+        });
+      });
+    </script>
+  </body>
+</html>
