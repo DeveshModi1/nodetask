@@ -108,6 +108,40 @@ db.once("open", () => {
     res.redirect("/data");
   });
 });
+app.get('/user', async(req, res) => {
+  const email = req.query.email; // Get the email from the query parameter
+
+    
+
+  const db = client.db(); 
+  const collection = db.collection("users"); 
+  const userEmail = req.session.userEmail;
+  
+  
+
+  try {
+    const users = await collection.findOne({ email: email }, (err, user) => {
+      if (err) {
+        console.error('Error fetching data from MongoDB:', err);
+        res.status(500).json({ error: 'Data fetch error' });
+        return;
+      }
+
+      client.close();
+
+      // Send the fetched user data to the client as JSON
+      res.json(user);
+    });
+    
+
+    res.json(users)
+    
+  } catch (err) {
+    console.error("Error fetching user data:", err);
+    res.status(500).send("Error fetching user data from MongoDB");
+  }
+  });
+
 
 
 
@@ -128,6 +162,7 @@ app.get("/data", async (req, res) => {
 
   try {
     const users = await collection.find({}).toArray();
+    
     
 
     res.render("index", { users,userEmail});

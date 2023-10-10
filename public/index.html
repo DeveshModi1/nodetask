@@ -56,9 +56,21 @@
       <h2>User Detail Form</h2>
       <form action="/createuser" method="POST">
         <label for="fname">First Name:</label>
-        <input type="text" id="fname" name="fname"  required/>
+        <input
+          type="text"
+          id="fname"
+          name="fname"
+          oninput="validateInput(this)"
+          required
+        />
         <label for="lname">Last Name:</label>
-        <input type="text" id="lname" name="lname" required />
+        <input
+          type="text"
+          id="lname"
+          name="lname"
+          oninput="validateInput(this)"
+          required
+        />
         <label for="mob">Mobile No:</label>
         <input
           type="tel"
@@ -69,7 +81,6 @@
           title="Please enter a 10-digit mobile number."
           name="mob"
           required
-          
         />
         <label for="add">Address:</label>
         <input
@@ -77,26 +88,36 @@
           id="addstr"
           name="str"
           placeholder="Street"
-          
-          required/>
-        <input type="text" id="addci" name="city" placeholder="City" required />
+          oninput="validateInput(this)"
+          required
+        />
+        <input
+          type="text"
+          id="addci"
+          name="city"
+          placeholder="City"
+          oninput="validateInput(this)"
+          required
+        />
         <input
           type="text"
           id="addst"
           name="stat"
           placeholder="State"
-          
-          required/>
+          oninput="validateInput(this)"
+          required
+        />
         <input
           type="text"
           id="addcont"
           name="cont"
           placeholder="Country"
-          
-          required/>
+          oninput="validateInput(this)"
+          required
+        />
 
         <label for="email">Email:</label>
-        <input type="email" id="email" name="email"  required/>
+        <input type="email" id="email" name="email" required />
 
         <label for="login">Login Id:</label>
         <input
@@ -114,27 +135,22 @@
           id="pass"
           name="pass"
           pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{6,}$"
-               title="Password must contain at least 8 characters, including one digit, one lowercase letter, one uppercase letter, and one special character." required
-               
+          title="Password must contain at least 8 characters, including one digit, one lowercase letter, one uppercase letter, and one special character."
+          required
         />
 
         <button type="submit">Save</button>
-
-
-
       </form>
-
-      
     </div>
-
-    
-
-
-
-    
-
-    
-
-
+    <script>
+      function validateInput(inputField) {
+        // Use a regular expression to check if the input contains only alphabetic characters.
+        var regex = /^[a-zA-Z]*$/;
+        if (!regex.test(inputField.value)) {
+          // If the input doesn't match the pattern, remove the non-alphabetic characters.
+          inputField.value = inputField.value.replace(/[^a-zA-Z]/g, "");
+        }
+      }
+    </script>
   </body>
 </html>
