@@ -30,7 +30,7 @@ app.use(session({
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 mongoose.connect(
-  "mongodb+srv://modidevesh15:mobztask000@cluster1.utjht8p.mongodb.net/User?retryWrites=true&w=majority"
+  "mongodb+srv://pass000@cluster1.utjht8p.mongodb.net/User?retryWrites=true&w=majority"
 );
 
 var db = mongoose.connection;
