@@ -12,7 +12,7 @@ const server = http.createServer(app);
 const io = socketIo(server);
 const port = process.env.PORT || 6600;
 const uri =
-  "mongodb+srv://modidevesh15:mobztask000@cluster1.utjht8p.mongodb.net/User?retryWrites=true&w=majority"; 
+  "mongodb+srv://pass@000@cluster1.utjht8p.mongodb.net/User?retryWrites=true&w=majority"; 
 const usersInRoom = new Map();
 const client = new MongoClient(uri, {
   useNewUrlParser: true,
@@ -22,7 +22,7 @@ const client = new MongoClient(uri, {
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(session({
-  secret: 'your-secret-key', // Replace with a secret key
+  secret: 'your-secret-key', 
   resave: false,
   saveUninitialized: true,
 }));
@@ -82,12 +82,10 @@ db.once("open", () => {
     io.on("connection", (socket) => {
       console.log("A user connected");
     
-      
+    
       socket.join("live_users")
       var sock = socket.id;
-      
       usersInRoom.set(socket.id, { sock,email,fname  });
-      
       
       console.log(usersInRoom)
       io.sockets.in("live_users").emit('connectedRoom',Array.from(usersInRoom.values()));
@@ -109,7 +107,7 @@ db.once("open", () => {
   });
 });
 app.get('/user', async(req, res) => {
-  const email = req.query.email; // Get the email from the query parameter
+  const email = req.query.email; 
 
     
 
@@ -129,7 +127,7 @@ app.get('/user', async(req, res) => {
 
       client.close();
 
-      // Send the fetched user data to the client as JSON
+      
       res.json(user);
     });
     

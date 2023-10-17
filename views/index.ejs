@@ -42,19 +42,12 @@
   <body>
     <h1>User Data</h1>
     <div class="container" id="user-cards">
-      <!-- User cards will be added here dynamically -->
     </div>
     <div class="popup" id="popup">
-      <!-- User details will be added here dynamically -->
       <button id="close">Close</button>
   </div>
 
-    <!-- <div class="container">
-      <div class="card" id="card">
-        <p class="user-details" id="user-sock">Socket Id:</p>
-        <p class="user-details">Click Me For Info</p>
-      </div>
-    </div> -->
+   
     
 
     <script src="/socket.io/socket.io.js"></script>
@@ -68,16 +61,14 @@
         popup.innerHTML = "";
 
 
-        // const sock = document.getElementById("user-sock");
-
-        // sock.innerHTML = "";
+        
         data.forEach((user) => {
           const userCard = document.createElement("div");
           userCard.className = "card";
           userCard.innerHTML = `
                 <p class="user-details">Socket Id: ${user.sock}</p>
                 <p class="user-details">Email: ${user.email}</p>
-                <!-- Add more user details here -->
+                
             `;
           userCard.addEventListener("click", () => {
             console.log("Card clicked!");
@@ -105,12 +96,9 @@
                   popup.style.display = "none";
                 });
 
-                // Append the user details card to the popup
                 popup.appendChild(userDetailsCard);
 
-                // Display the popup
                 popup.style.display = "block";
-                // Handle and use the fetched data
                 console.log(data);
               })
               .catch((error) => {
@@ -119,15 +107,9 @@
 
             const popup = document.getElementById("popup");
 
-            // popup.style.display = "block";
           });
           userCardsContainer.appendChild(userCard);
-          // const userElements = document.createElement("div");
-          // userElements.textContent = `Socket Id: ${user.sock} \n Email: ${user.email}`;
-          // sock.appendChild(userElements);
           
-
-          // Call the fetchData function to initiate the request
         });
         
       });
